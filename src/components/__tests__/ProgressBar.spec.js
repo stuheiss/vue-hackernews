@@ -11,17 +11,21 @@ describe('ProgressBar.vue', () => {
     expect(wrapper.element.style.width).toBe('0%')
   })
 
-  test('displays the bar when start is called', () => {
+  test('displays the bar when start is called', async () => {
     const wrapper = shallowMount(ProgressBar)
     expect(wrapper.classes()).toContain('hidden')
     wrapper.vm.start()
+    await wrapper.vm.$nextTick()
+    expect.assertions(2)
     expect(wrapper.classes()).not.toContain('hidden')
   })
 
-  test('sets the bar to 100% width when finish is called', () => {
+  test('sets the bar to 100% width when finish is called', async () => {
     const wrapper = shallowMount(ProgressBar)
     wrapper.vm.start()
     wrapper.vm.finish()
+    await wrapper.vm.$nextTick()
+    expect.assertions(1)
     expect(wrapper.element.style.width).toBe('100%')
   })
 
@@ -46,26 +50,34 @@ describe('ProgressBar.vue', () => {
     expect(wrapper.classes()).not.toContain('error')
   })
 
-  test('sets the bar to 100% width when fail is called', () => {
+  test('sets the bar to 100% width when fail is called', async () => {
     const wrapper = shallowMount(ProgressBar)
     wrapper.vm.fail()
+    await wrapper.vm.$nextTick()
+    expect.assertions(1)
     expect(wrapper.classes()).toContain('error')
   })
 
-  test('styles the bar correctly when fail is called', () => {
+  test('styles the bar correctly when fail is called', async () => {
     const wrapper = shallowMount(ProgressBar)
     wrapper.vm.fail()
+    await wrapper.vm.$nextTick()
+    expect.assertions(1)
     expect(wrapper.element.style.width).toBe('100%')
   })
 
-  test('increases width by 1% every 100ms after start call', () => {
+  test('increases width by 1% every 100ms after start call', async () => {
     const wrapper = shallowMount(ProgressBar)
     wrapper.vm.start()
     jest.runTimersToTime(100)
+    await wrapper.vm.$nextTick()
+    expect.assertions(3)
     expect(wrapper.element.style.width).toBe('1%')
     jest.runTimersToTime(900)
+    await wrapper.vm.$nextTick()
     expect(wrapper.element.style.width).toBe('10%')
     jest.runTimersToTime(4000)
+    await wrapper.vm.$nextTick()
     expect(wrapper.element.style.width).toBe('50%')
   })
 

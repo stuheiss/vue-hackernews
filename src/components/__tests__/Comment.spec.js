@@ -82,7 +82,7 @@ describe('Comment.vue', () => {
     expect(wrapper.find('.toggle').text()).toContain('[-]')
   })
 
-  test('renders closed toggle after click if comment has kids', () => {
+  test('renders closed toggle after click if comment has kids', async () => {
     const store = createStore({
       state: {
         comments: {
@@ -99,6 +99,8 @@ describe('Comment.vue', () => {
       }
     })
     wrapper.find('a').trigger('click')
+    await wrapper.vm.$nextTick()
+    expect.assertions(1)
     expect(wrapper.find('.toggle').text()).toContain('[+] 2 replies collapsed')
   })
 
@@ -121,7 +123,7 @@ describe('Comment.vue', () => {
     expect(wrapper.findAll(Comment)).toHaveLength(3)
   })
 
-  test('hides comments when toggle is clicked', () => {
+  test('hides comments when toggle is clicked', async () => {
     const store = createStore({
       state: {
         comments: {
@@ -138,6 +140,8 @@ describe('Comment.vue', () => {
       }
     })
     wrapper.find('a').trigger('click')
+    await wrapper.vm.$nextTick()
+    expect.assertions(2)
     expect(wrapper.findAll(Comment)).toHaveLength(3)
     expect(wrapper.findAll(Comment).isVisible()).toBeFalsy()
   })

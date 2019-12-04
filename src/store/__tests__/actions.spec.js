@@ -6,7 +6,6 @@ jest.mock('../../api/api')
 
 describe('actions', () => {
   test('fetchListData calls commit with the result of fetchListData', async () => {
-    expect.assertions(1)
     const items = [{}, {}]
     const type = 'top'
     fetchListData.mockImplementation(calledWith => {
@@ -19,6 +18,7 @@ describe('actions', () => {
     }
     actions.fetchListData(context, { type })
     await flushPromises()
+    expect.assertions(1)
     expect(context.commit).toHaveBeenCalledWith('setItems', { items })
   })
 })

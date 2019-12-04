@@ -75,7 +75,6 @@ describe('ItemList.vue', () => {
   })
 
   test('calls $bar finish when load successful', async () => {
-    expect.assertions(1)
     const mocks = {
       $bar: {
         finish: jest.fn()
@@ -83,11 +82,11 @@ describe('ItemList.vue', () => {
     }
     createWrapper({ mocks })
     await flushPromises()
+    expect.assertions(1)
     expect(mocks.$bar.finish).toHaveBeenCalled()
   })
 
   test('dispatches fetchListData with $route.params.type', async () => {
-    expect.assertions(1)
     const store = createStore()
     store.dispatch = jest.fn(() => Promise.resolve())
     const type = 'a type'
@@ -100,6 +99,7 @@ describe('ItemList.vue', () => {
     }
     createWrapper({ store, mocks })
     await flushPromises()
+    expect.assertions(1)
     expect(store.dispatch).toHaveBeenCalledWith('fetchListData', { type })
   })
 
@@ -114,6 +114,7 @@ describe('ItemList.vue', () => {
     }
     createWrapper({ mocks, store })
     await flushPromises()
+    expect.assertions(1)
     expect(mocks.$bar.fail).toHaveBeenCalled()
   })
 
@@ -145,7 +146,6 @@ describe('ItemList.vue', () => {
   })
 
   test('calls $router.replace when the page parameter is greater than the max page count', async () => {
-    expect.assertions(1)
     const store = createStore({
       getters: {
         maxPage: () => 5
@@ -163,11 +163,11 @@ describe('ItemList.vue', () => {
     }
     createWrapper({ mocks, store })
     await flushPromises()
+    expect.assertions(1)
     expect(mocks.$router.replace).toHaveBeenCalledWith('/top/1')
   })
 
   test('calls $router.replace when the page parameter is 0', async () => {
-    expect.assertions(1)
     const mocks = {
       $route: {
         params: {
@@ -180,11 +180,11 @@ describe('ItemList.vue', () => {
     }
     createWrapper({ mocks })
     await flushPromises()
+    expect.assertions(1)
     expect(mocks.$router.replace).toHaveBeenCalledWith('/top/1')
   })
 
   test('calls $router.replace when the page parameter is not a number', async () => {
-    expect.assertions(1)
     const mocks = {
       $route: {
         params: {
@@ -197,6 +197,7 @@ describe('ItemList.vue', () => {
     }
     createWrapper({ mocks })
     await flushPromises()
+    expect.assertions(1)
     expect(mocks.$router.replace).toHaveBeenCalledWith('/top/1')
   })
 

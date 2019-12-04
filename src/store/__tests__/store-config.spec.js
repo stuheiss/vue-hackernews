@@ -25,7 +25,6 @@ function createItems () {
 
 describe('store-config', () => {
   test('calling fetchListData with the type returns top 20 displayItems from displayItems getter', async () => {
-    expect.assertions(1)
     const items = createItems()
     const clonedStoreConfig = cloneDeep(storeConfig)
     const store = new Vuex.Store(clonedStoreConfig)
@@ -39,6 +38,7 @@ describe('store-config', () => {
 
     await flushPromises()
 
+    expect.assertions(1)
     expect(store.getters.displayItems).toEqual(items.slice(0, 20))
   })
 })
